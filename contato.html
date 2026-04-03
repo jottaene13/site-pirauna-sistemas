@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato | Piraúna Sistemas</title>
+  <meta name="description" content="Entre em contato com a Piraúna Sistemas e receba uma proposta para site, sistema web ou automação para sua empresa.">
+  <meta name="theme-color" content="#0b1f30">
+  <link rel="canonical" href="https://www.piraunasistemas.com.br/contato">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="contact">
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="/" aria-label="Página inicial">
+        <img src="assets/images/logo-pirauna.jpg" alt="Logo da Piraúna Sistemas" width="48" height="48">
+        <span class="brand-text">
+          <strong>Piraúna Sistemas</strong>
+          <small>Automação e desenvolvimento que transformam</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-toggle-bar"></span>
+        <span class="menu-toggle-bar"></span>
+        <span class="menu-toggle-bar"></span>
+        <span class="sr-only">Abrir menu de navegação</span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Navegação principal">
+        <a data-nav="home" href="/">Início</a>
+        <a data-nav="about" href="/sobre">Sobre nós</a>
+        <a data-nav="services" href="/produtos">Produtos</a>
+        <a data-nav="portfolio" href="/portfolio">Portfólio</a>
+        <a data-nav="contact" href="/contato">Contato</a>
+        <a class="btn btn-primary btn-small js-whatsapp" href="#" rel="noopener noreferrer">WhatsApp</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero section">
+      <div class="container" data-reveal>
+        <p class="eyebrow">Contato</p>
+        <h1>Fale com a Piraúna Sistemas e acelere seu projeto digital.</h1>
+        <p class="lead">
+          Compartilhe seu objetivo e retornamos com um direcionamento técnico e estratégico para o próximo passo.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-grid">
+        <article class="panel" data-reveal>
+          <h2>Canais de atendimento</h2>
+          <p>Escolha o canal que preferir para começar a conversa com nosso time.</p>
+          <ul class="contact-links">
+            <li><a class="js-whatsapp" href="#" rel="noopener noreferrer">WhatsApp Comercial</a></li>
+            <li><a data-social="instagram" href="#" rel="noopener noreferrer">Instagram</a></li>
+            <li><a data-social="linkedin" href="#" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a data-email="contact" href="#">E-mail comercial</a></li>
+          </ul>
+          <p class="note">
+            Atendimento de segunda a sexta, das 09h às 18h (horário de Brasília).
+          </p>
+        </article>
+
+        <form id="whatsapp-form" class="contact-form" data-reveal>
+          <h2>Envie seu briefing</h2>
+          <p>Ao enviar, abrimos uma conversa no WhatsApp com sua mensagem já estruturada.</p>
+
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" type="text" placeholder="Seu nome" required>
+
+          <label for="empresa">Empresa</label>
+          <input id="empresa" name="empresa" type="text" placeholder="Nome da empresa" required>
+
+          <label for="objetivo">Objetivo do projeto</label>
+          <input id="objetivo" name="objetivo" type="text" placeholder="Ex.: novo site, sistema interno, automação" required>
+
+          <label for="orcamento">Faixa de investimento</label>
+          <select id="orcamento" name="orcamento" required>
+            <option value="">Selecione</option>
+            <option value="Até R$ 5.000">Até R$ 5.000</option>
+            <option value="R$ 5.000 a R$ 15.000">R$ 5.000 a R$ 15.000</option>
+            <option value="R$ 15.000 a R$ 30.000">R$ 15.000 a R$ 30.000</option>
+            <option value="Acima de R$ 30.000">Acima de R$ 30.000</option>
+          </select>
+
+          <label for="mensagem">Detalhes</label>
+          <textarea id="mensagem" name="mensagem" rows="5" placeholder="Conte mais sobre seu cenário e prazo"></textarea>
+
+          <button class="btn btn-primary" type="submit">Enviar para WhatsApp</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="/">
+          <img src="assets/images/logo-pirauna.jpg" alt="Logo da Piraúna Sistemas" width="40" height="40">
+          <span class="brand-text">
+            <strong>Piraúna Sistemas</strong>
+            <small>Automação e desenvolvimento que transformam</small>
+          </span>
+        </a>
+        <p class="footer-copy">Da estratégia ao código, entregamos tecnologia com impacto real no negócio.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Menu de rodapé">
+        <a href="/sobre">Sobre nós</a>
+        <a href="/produtos">Produtos</a>
+        <a href="/portfolio">Portfólio</a>
+        <a href="/contato">Contato</a>
+      </nav>
+
+      <div>
+        <p class="footer-title">Redes sociais</p>
+        <div class="footer-socials">
+          <a data-social="instagram" href="#" rel="noopener noreferrer">Instagram</a>
+          <a data-social="linkedin" href="#" rel="noopener noreferrer">LinkedIn</a>
+          <a data-social="facebook" href="#" rel="noopener noreferrer">Facebook</a>
+          <a data-social="youtube" href="#" rel="noopener noreferrer">YouTube</a>
+        </div>
+        <p class="footer-meta">&copy; <span id="year"></span> Piraúna Sistemas. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a class="whatsapp-fab js-whatsapp" href="#" rel="noopener noreferrer" aria-label="Abrir conversa no WhatsApp">WhatsApp</a>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
