@@ -61,6 +61,9 @@
       grouped[groupName].forEach((field) => {
         const row = document.createElement("div");
         row.className = "admin-field";
+        if (field.type === "textarea") {
+          row.classList.add("admin-field-wide");
+        }
 
         const label = document.createElement("label");
         label.textContent = field.label;

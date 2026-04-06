@@ -5,11 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin CMS | Pirauna Sistemas</title>
   <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
 </head>
 <body>
   <main class="admin-wrap">
     <section class="admin-card">
+      <header class="admin-brandbar">
+        <a class="brand" href="/" aria-label="Abrir site da Pirauna Sistemas">
+          <img src="assets/images/logo-pirauna.jpg" alt="Logo da Pirauna Sistemas" width="48" height="48">
+          <span class="brand-text">
+            <strong>Pirauna Sistemas</strong>
+            <small>Painel administrativo</small>
+          </span>
+        </a>
+        <a class="admin-link-site" href="/" target="_blank" rel="noopener">Ver site</a>
+      </header>
+
       <header class="admin-head">
         <h1>Painel de Conteudo</h1>
         <p>Edite textos, contato e links sem tocar no codigo.</p>
@@ -21,13 +35,17 @@
       </div>
 
       <form id="admin-login-form" class="admin-login">
-        <label for="admin-email">Email</label>
-        <input id="admin-email" type="email" required placeholder="seu-email@empresa.com">
+        <div class="admin-login-field">
+          <label for="admin-email">Email</label>
+          <input id="admin-email" type="email" required placeholder="seu-email@empresa.com">
+        </div>
 
-        <label for="admin-password">Senha</label>
-        <input id="admin-password" type="password" required placeholder="Sua senha">
+        <div class="admin-login-field">
+          <label for="admin-password">Senha</label>
+          <input id="admin-password" type="password" required placeholder="Sua senha">
+        </div>
 
-        <button type="submit">Entrar no painel</button>
+        <button class="admin-login-submit" type="submit">Entrar no painel</button>
       </form>
 
       <section id="admin-editor" class="admin-editor is-hidden">
