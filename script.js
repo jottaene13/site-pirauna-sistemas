@@ -1,9 +1,8 @@
 // Configuracoes centrais da marca e canais de contato.
-// Preencha whatsappNumber, email e redes assim que tiver os dados oficiais.
 const COMPANY_CONFIG = {
-  name: "Pirauna Sistemas",
+  name: "Piraúna Sistemas",
   whatsappNumber: "5591982937521",
-  whatsappDefaultMessage: "Ola, equipe da Pirauna Sistemas! Gostaria de conversar sobre um projeto para minha empresa.",
+  whatsappDefaultMessage: "Olá, equipe da Piraúna Sistemas! Gostaria de conversar sobre um projeto para minha empresa.",
   email: "contato@piraunasistemas.com.br",
   socials: {
     instagram: "https://www.instagram.com/piraunasistemas/",
@@ -148,7 +147,7 @@ function wireContactForm() {
     const mensagem = (data.get("mensagem") || "").toString().trim();
 
     const text = [
-      "Ola, equipe da Pirauna Sistemas!",
+      "Olá, equipe da Piraúna Sistemas!",
       "",
       `Nome: ${nome}`,
       `Empresa: ${empresa}`,
@@ -188,4 +187,3 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
-
