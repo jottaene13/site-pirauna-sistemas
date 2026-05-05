@@ -1,8 +1,7 @@
-// Configuracoes centrais da marca e canais de contato.
 const COMPANY_CONFIG = {
   name: "Piraúna Sistemas",
   whatsappNumber: "5591982937521",
-  whatsappDefaultMessage: "Olá, equipe da Piraúna Sistemas! Gostaria de conversar sobre um projeto para minha empresa.",
+  whatsappDefaultMessage: "Olá, equipe da Piraúna Sistemas! Gostaria de saber mais sobre os produtos.",
   email: "contato@piraunasistemas.com.br",
   socials: {
     instagram: "https://www.instagram.com/piraunasistemas/",
@@ -10,6 +9,14 @@ const COMPANY_CONFIG = {
     facebook: "",
     youtube: ""
   }
+};
+
+const WHATSAPP_MESSAGES = {
+  "ploutos-geral": "Olá! Tenho interesse no Ploutos, o assistente financeiro pelo WhatsApp. Pode me contar mais?",
+  "ploutos-essencial": "Olá! Quero assinar o Ploutos Essencial (R$29,90/mês). Como faço para começar?",
+  "ploutos-pro": "Olá! Quero assinar o Ploutos Pro com IA (R$39,90/mês). Como faço para começar?",
+  "hermes-lista": "Olá! Quero ser avisado quando o Hermes (cardápio digital com delivery) for lançado. Me coloca na lista de espera!",
+  "argos-lista": "Olá! Quero ser avisado quando o Argos (agenda anti-furo) for lançado. Me coloca na lista de espera!"
 };
 
 function createWhatsAppUrl(message) {
@@ -54,9 +61,10 @@ function wireLocalDevRoutes() {
 
   const map = {
     "/": "/index.html",
+    "/ploutos": "/ploutos.html",
+    "/hermes": "/hermes.html",
+    "/argos": "/argos.html",
     "/sobre": "/sobre.html",
-    "/produtos": "/produtos.html",
-    "/portfolio": "/portfolio.html",
     "/contato": "/contato.html"
   };
 
@@ -80,6 +88,16 @@ function wireContactLinks() {
       anchor.removeAttribute("target");
     }
   });
+
+  if (hasWhatsApp) {
+    document.querySelectorAll("[data-whatsapp-msg]").forEach((anchor) => {
+      const key = anchor.dataset.whatsappMsg;
+      const msg = WHATSAPP_MESSAGES[key] || COMPANY_CONFIG.whatsappDefaultMessage;
+      anchor.href = createWhatsAppUrl(msg);
+      anchor.target = "_blank";
+      anchor.rel = "noopener noreferrer";
+    });
+  }
 
   document.querySelectorAll("[data-social]").forEach((anchor) => {
     const key = anchor.dataset.social;

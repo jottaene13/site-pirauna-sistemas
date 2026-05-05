@@ -4,10 +4,15 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/ploutos.html", "destination": "/ploutos", "permanent": true },
+    { "source": "/hermes.html", "destination": "/hermes", "permanent": true },
+    { "source": "/argos.html", "destination": "/argos", "permanent": true },
     { "source": "/sobre.html", "destination": "/sobre", "permanent": true },
-    { "source": "/produtos.html", "destination": "/produtos", "permanent": true },
-    { "source": "/portfolio.html", "destination": "/portfolio", "permanent": true },
     { "source": "/contato.html", "destination": "/contato", "permanent": true },
-    { "source": "/admin.html", "destination": "/admin", "permanent": true }
+    { "source": "/admin.html", "destination": "/admin", "permanent": true },
+    { "source": "/produtos", "destination": "/", "permanent": true },
+    { "source": "/produtos.html", "destination": "/", "permanent": true },
+    { "source": "/portfolio", "destination": "/", "permanent": true },
+    { "source": "/portfolio.html", "destination": "/", "permanent": true }
   ]
 }
