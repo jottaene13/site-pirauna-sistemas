@@ -13,6 +13,12 @@
     { "source": "/produtos", "destination": "/", "permanent": true },
     { "source": "/produtos.html", "destination": "/", "permanent": true },
     { "source": "/portfolio", "destination": "/", "permanent": true },
-    { "source": "/portfolio.html", "destination": "/", "permanent": true }
-  ]
+    { "source": "/portfolio.html", "destination": "/", "permanent": true },
+    { "source": "/checkout.html", "destination": "/checkout", "permanent": true }
+  ],
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  }
 }
