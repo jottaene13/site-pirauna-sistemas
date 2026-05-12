@@ -256,7 +256,7 @@
     const urlParams    = new URLSearchParams(window.location.search);
     let selectedPlan   = PLANS[urlParams.get('plano')] ? urlParams.get('plano') : 'essencial';
     let selectedMethod = 'PIX';
-    let selectedPeriod = 'mensal';
+    let selectedPeriod = ['mensal','anual'].includes(urlParams.get('periodo')) ? urlParams.get('periodo') : 'mensal';
 
     function updateSummary() {
       const p       = PLANS[selectedPlan];
@@ -296,6 +296,7 @@
 
     function initPeriodToggle() {
       document.querySelectorAll('[data-period]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.period === selectedPeriod);
         btn.addEventListener('click', () => {
           document.querySelectorAll('[data-period]').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
@@ -307,6 +308,10 @@
           updateSummary();
         });
       });
+      document.getElementById('period-hint').textContent = selectedPeriod === 'mensal'
+        ? 'Cobrado mensalmente. Cancele quando quiser.'
+        : 'Cobrado uma vez por ano. Inclui 2 meses grátis.';
+      updatePlanPrices();
     }
 
     function initPayMethod() {

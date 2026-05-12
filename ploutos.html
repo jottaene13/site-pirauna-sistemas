@@ -167,6 +167,17 @@
           <h2>Escolha o que faz mais sentido para você</h2>
           <p style="max-width:50ch;margin:0 auto;">Ambos os planos funcionam 100% pelo WhatsApp. Sem contrato, cancele quando quiser.</p>
         </div>
+
+        <!-- Toggle Mensal / Anual -->
+        <div data-reveal style="display:flex;justify-content:center;margin-bottom:36px;">
+          <div class="pay-method-toggle">
+            <button type="button" class="pay-method-btn active" data-period="mensal">Mensal</button>
+            <button type="button" class="pay-method-btn" data-period="anual">
+              Anual &nbsp;<span class="badge badge-beta" style="font-size:0.65rem;padding:2px 8px;">2 meses grátis</span>
+            </button>
+          </div>
+        </div>
+
         <div class="pricing-grid" data-reveal>
 
           <!-- Essencial -->
@@ -174,9 +185,10 @@
             <div class="pricing-name">Essencial</div>
             <div class="pricing-tagline">Controle financeiro direto no WhatsApp</div>
             <div class="pricing-price">
-              <strong>R$29,90</strong>
-              <span>/mês</span>
+              <strong id="price-essencial">R$24,90</strong>
+              <span id="period-essencial">/mês</span>
             </div>
+            <p id="permonth-essencial" hidden style="font-size:0.82rem;opacity:0.7;margin:-8px 0 12px;text-align:center;">equivale a R$20,75/mês</p>
             <ul class="pricing-features">
               <li>Registro de gastos e receitas por mensagem</li>
               <li>Categorização automática</li>
@@ -185,7 +197,7 @@
               <li>Relatório mensal automático</li>
               <li>Suporte via WhatsApp</li>
             </ul>
-            <a class="btn btn-ghost" href="/checkout?plano=essencial">Assinar o Essencial</a>
+            <a class="btn btn-ghost" id="cta-essencial" href="/checkout?plano=essencial&periodo=mensal">Assinar o Essencial</a>
           </div>
 
           <!-- Pro com IA -->
@@ -193,9 +205,10 @@
             <div class="pricing-name">Pro com IA</div>
             <div class="pricing-tagline">Análises inteligentes e previsões personalizadas</div>
             <div class="pricing-price">
-              <strong>R$39,90</strong>
-              <span>/mês</span>
+              <strong id="price-pro">R$44,90</strong>
+              <span id="period-pro">/mês</span>
             </div>
+            <p id="permonth-pro" hidden style="font-size:0.82rem;opacity:0.7;margin:-8px 0 12px;text-align:center;">equivale a R$37,42/mês</p>
             <ul class="pricing-features">
               <li>Tudo do plano Essencial</li>
               <li>Perguntas em linguagem natural com IA</li>
@@ -204,10 +217,38 @@
               <li>Relatórios detalhados gerados por IA</li>
               <li>Suporte prioritário</li>
             </ul>
-            <a class="btn btn-primary" href="/checkout?plano=pro">Assinar o Pro com IA</a>
+            <a class="btn btn-primary" id="cta-pro" href="/checkout?plano=pro&periodo=mensal">Assinar o Pro com IA</a>
           </div>
 
         </div>
+
+        <script>
+          (function () {
+            var prices   = { essencial: { mensal: 'R$24,90', anual: 'R$249,00' }, pro: { mensal: 'R$44,90', anual: 'R$449,00' } };
+            var permonth = { essencial: 'equivale a R$20,75/mês', pro: 'equivale a R$37,42/mês' };
+            var period   = 'mensal';
+
+            function update() {
+              ['essencial', 'pro'].forEach(function (p) {
+                document.getElementById('price-' + p).textContent  = prices[p][period];
+                document.getElementById('period-' + p).textContent = period === 'mensal' ? '/mês' : '/ano';
+                var pm = document.getElementById('permonth-' + p);
+                pm.textContent = permonth[p];
+                pm.hidden = period !== 'anual';
+                document.getElementById('cta-' + p).href = '/checkout?plano=' + p + '&periodo=' + period;
+              });
+            }
+
+            document.querySelectorAll('[data-period]').forEach(function (btn) {
+              btn.addEventListener('click', function () {
+                document.querySelectorAll('[data-period]').forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                period = btn.dataset.period;
+                update();
+              });
+            });
+          })();
+        </script>
       </div>
     </section>
 
