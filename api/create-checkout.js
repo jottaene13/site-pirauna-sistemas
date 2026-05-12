@@ -4,8 +4,14 @@ const ASAAS_BASE =
     : 'https://sandbox.asaas.com/api/v3';
 
 const PLANS = {
-  essencial: { value: 29.90, description: 'Ploutos Essencial' },
-  pro:       { value: 39.90, description: 'Ploutos Pro com IA' },
+  essencial: {
+    mensal: { value: 24.90,  cycle: 'MONTHLY', description: 'Ploutos Essencial - Mensal' },
+    anual:  { value: 249.00, cycle: 'YEARLY',  description: 'Ploutos Essencial - Anual'  },
+  },
+  pro: {
+    mensal: { value: 44.90,  cycle: 'MONTHLY', description: 'Ploutos Pro com IA - Mensal' },
+    anual:  { value: 449.00, cycle: 'YEARLY',  description: 'Ploutos Pro com IA - Anual'  },
+  },
 };
 
 async function asaas(method, path, body) {
@@ -46,14 +52,16 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { nome, email, cpf, whatsapp, plano, metodo } = req.body || {};
+  const { nome, email, cpf, whatsapp, plano, metodo, periodo } = req.body || {};
 
-  if (!nome || !email || !cpf || !whatsapp || !plano || !metodo) {
+  if (!nome || !email || !cpf || !whatsapp || !plano || !metodo || !periodo) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
 
-  const plan = PLANS[plano];
-  if (!plan) return res.status(400).json({ error: 'Plano inválido.' });
+  const planGroup = PLANS[plano];
+  if (!planGroup) return res.status(400).json({ error: 'Plano inválido.' });
+  const plan = planGroup[periodo];
+  if (!plan) return res.status(400).json({ error: 'Período inválido.' });
   if (!['PIX', 'CREDIT_CARD'].includes(metodo)) {
     return res.status(400).json({ error: 'Método de pagamento inválido.' });
   }
@@ -81,7 +89,7 @@ module.exports = async (req, res) => {
       billingType:      metodo,
       value:            plan.value,
       nextDueDate:      todayISO(),
-      cycle:            'MONTHLY',
+      cycle:            plan.cycle,
       description:      plan.description,
       externalReference: `${plano.toUpperCase()}:${phoneDigits}`,
     });

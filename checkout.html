@@ -62,18 +62,30 @@
                     <input type="radio" name="plano" value="essencial">
                     <div class="plan-option-inner">
                       <span class="plan-name">Essencial</span>
-                      <span class="plan-price">R$29,90/mês</span>
+                      <span class="plan-price" id="price-essencial">R$24,90/mês</span>
                     </div>
                   </label>
                   <label class="plan-option">
                     <input type="radio" name="plano" value="pro">
                     <div class="plan-option-inner">
                       <span class="plan-name">Pro com IA</span>
-                      <span class="plan-price">R$39,90/mês</span>
+                      <span class="plan-price" id="price-pro">R$44,90/mês</span>
                       <span class="badge badge-beta" style="font-size:0.6rem;padding:2px 8px;margin-top:2px">Popular</span>
                     </div>
                   </label>
                 </div>
+              </div>
+
+              <!-- Período de cobrança -->
+              <div class="co-field-group">
+                <span class="co-field-label">Período</span>
+                <div class="pay-method-toggle">
+                  <button type="button" class="pay-method-btn active" data-period="mensal">Mensal</button>
+                  <button type="button" class="pay-method-btn" data-period="anual">
+                    Anual &nbsp;<span class="badge badge-beta" style="font-size:0.6rem;padding:2px 6px">2 meses grátis</span>
+                  </button>
+                </div>
+                <p class="co-field-hint" id="period-hint">Cobrado mensalmente. Cancele quando quiser.</p>
               </div>
 
               <!-- Dados pessoais -->
@@ -153,9 +165,11 @@
               <img src="/logo-ploutos.jpeg" alt="Ploutos" class="checkout-product-logo">
               <h3 id="summary-plan-name">Ploutos Essencial</h3>
               <div class="summary-price">
-                <strong id="summary-price">R$29,90</strong>
-                <span>/mês</span>
+                <strong id="summary-price">R$24,90</strong>
+                <span id="summary-period">/mês</span>
               </div>
+              <p id="summary-per-month" hidden style="font-size:0.8rem;opacity:0.7;margin:-8px 0 8px">equivale a R$20,75/mês</p>
+              <p id="summary-savings" hidden style="color:#4ade80;font-size:0.85rem;margin:-4px 0 10px">🎉 Você economiza 2 meses!</p>
               <ul class="summary-features" id="summary-features"></ul>
               <p class="summary-guarantee">
                 🔒 Dados com criptografia<br>
@@ -213,7 +227,8 @@
     const PLANS = {
       essencial: {
         name: 'Ploutos Essencial',
-        price: 'R$29,90',
+        mensal: { price: 'R$24,90', period: '/mês', perMonth: null, savings: null },
+        anual:  { price: 'R$249,00', period: '/ano', perMonth: 'equivale a R$20,75/mês', savings: '🎉 Você economiza 2 meses!' },
         features: [
           'Registro de gastos e receitas por mensagem',
           'Categorização automática',
@@ -225,7 +240,8 @@
       },
       pro: {
         name: 'Ploutos Pro com IA',
-        price: 'R$39,90',
+        mensal: { price: 'R$44,90', period: '/mês', perMonth: null, savings: null },
+        anual:  { price: 'R$449,00', period: '/ano', perMonth: 'equivale a R$37,42/mês', savings: '🎉 Você economiza 2 meses!' },
         features: [
           'Tudo do plano Essencial',
           'Perguntas em linguagem natural com IA',
@@ -237,16 +253,34 @@
       },
     };
 
-    const urlParams   = new URLSearchParams(window.location.search);
+    const urlParams    = new URLSearchParams(window.location.search);
     let selectedPlan   = PLANS[urlParams.get('plano')] ? urlParams.get('plano') : 'essencial';
     let selectedMethod = 'PIX';
+    let selectedPeriod = 'mensal';
 
     function updateSummary() {
-      const p = PLANS[selectedPlan];
+      const p       = PLANS[selectedPlan];
+      const billing = p[selectedPeriod];
       document.getElementById('summary-plan-name').textContent = p.name;
-      document.getElementById('summary-price').textContent = p.price;
-      document.getElementById('summary-features').innerHTML =
-        p.features.map(f => `<li>${f}</li>`).join('');
+      document.getElementById('summary-price').textContent     = billing.price;
+      document.getElementById('summary-period').textContent    = billing.period;
+      document.getElementById('summary-features').innerHTML    = p.features.map(f => `<li>${f}</li>`).join('');
+      const perMonthEl = document.getElementById('summary-per-month');
+      const savingsEl  = document.getElementById('summary-savings');
+      if (billing.savings) {
+        perMonthEl.textContent = billing.perMonth;
+        perMonthEl.hidden = false;
+        savingsEl.textContent = billing.savings;
+        savingsEl.hidden = false;
+      } else {
+        perMonthEl.hidden = true;
+        savingsEl.hidden  = true;
+      }
+    }
+
+    function updatePlanPrices() {
+      document.getElementById('price-essencial').textContent = selectedPeriod === 'mensal' ? 'R$24,90/mês' : 'R$249,00/ano';
+      document.getElementById('price-pro').textContent       = selectedPeriod === 'mensal' ? 'R$44,90/mês' : 'R$449,00/ano';
     }
 
     function initPlanSelector() {
@@ -260,10 +294,25 @@
       updateSummary();
     }
 
-    function initPayMethod() {
-      document.querySelectorAll('.pay-method-btn').forEach(btn => {
+    function initPeriodToggle() {
+      document.querySelectorAll('[data-period]').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('[data-period]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedPeriod = btn.dataset.period;
+          document.getElementById('period-hint').textContent = selectedPeriod === 'mensal'
+            ? 'Cobrado mensalmente. Cancele quando quiser.'
+            : 'Cobrado uma vez por ano. Inclui 2 meses grátis.';
+          updatePlanPrices();
+          updateSummary();
+        });
+      });
+    }
+
+    function initPayMethod() {
+      document.querySelectorAll('[data-method]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-method]').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           selectedMethod = btn.dataset.method;
         });
@@ -322,7 +371,7 @@
         const res = await fetch('/api/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nome, email, cpf, whatsapp, plano: selectedPlan, metodo: selectedMethod }),
+          body: JSON.stringify({ nome, email, cpf, whatsapp, plano: selectedPlan, metodo: selectedMethod, periodo: selectedPeriod }),
         });
 
         const data = await res.json();
@@ -362,6 +411,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       initPlanSelector();
+      initPeriodToggle();
       initPayMethod();
       applyMask(document.getElementById('cpf'), maskCpf);
       applyMask(document.getElementById('whatsapp'), maskPhone);
