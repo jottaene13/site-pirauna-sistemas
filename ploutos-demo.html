@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ploutos Demo | Pirauna Sistemas</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+  <style>
+    .demo-form { display: flex; flex-direction: column; gap: 16px; max-width: 460px; margin: 28px auto 0; }
+    .demo-field { display: flex; flex-direction: column; gap: 6px; }
+    .demo-field label { font-size: .85rem; font-weight: 700; color: var(--ink-soft); letter-spacing: .04em; text-transform: uppercase; }
+    .demo-field input { background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--ink); font-family: inherit; font-size: 1rem; padding: 11px 14px; outline: none; transition: border-color .2s; }
+    .demo-field input:focus { border-color: var(--accent); }
+    .demo-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+    .btn-liberar { background: var(--accent); color: #071523; font-family: inherit; font-weight: 800; font-size: .95rem; border: none; border-radius: var(--radius-sm); padding: 12px; cursor: pointer; transition: background .2s, opacity .2s; }
+    .btn-liberar:hover { background: var(--accent-strong); }
+    .btn-revogar { background: transparent; color: var(--danger); font-family: inherit; font-weight: 700; font-size: .95rem; border: 1px solid var(--danger); border-radius: var(--radius-sm); padding: 12px; cursor: pointer; transition: background .2s, opacity .2s; }
+    .btn-revogar:hover { background: rgba(255, 143, 143, 0.1); }
+    .btn-liberar:disabled, .btn-revogar:disabled { opacity: .5; cursor: default; }
+    .demo-feedback { border-radius: var(--radius-sm); padding: 12px 16px; font-size: .9rem; font-weight: 600; display: none; }
+    .demo-feedback.is-success { display: block; background: rgba(140, 255, 192, 0.12); border: 1px solid rgba(140, 255, 192, 0.4); color: var(--success); }
+    .demo-feedback.is-error   { display: block; background: rgba(255, 143, 143, 0.1); border: 1px solid rgba(255, 143, 143, 0.35); color: var(--danger); }
+    .demo-history { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 20px; }
+    .demo-history h2 { font-size: .95rem; color: var(--ink-soft); font-weight: 700; margin: 0 0 12px; text-transform: uppercase; letter-spacing: .05em; }
+    .history-list { display: flex; flex-direction: column; gap: 8px; }
+    .history-item { background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; font-size: .9rem; }
+    .history-item .phone { font-weight: 700; color: var(--accent); }
+    .history-item .tag { font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+    .tag-ok { background: rgba(140, 255, 192, 0.15); color: var(--success); }
+    .tag-rev { background: rgba(255, 143, 143, 0.12); color: var(--danger); }
+  </style>
+</head>
+<body>
+  <main class="admin-wrap">
+    <section class="admin-card">
+
+      <header class="admin-brandbar">
+        <a class="brand" href="/" aria-label="Abrir site da Pirauna Sistemas">
+          <img src="assets/images/logo-pirauna.jpg" alt="Logo Pirauna Sistemas" width="48" height="48">
+          <span class="brand-text">
+            <strong>Pirauna Sistemas</strong>
+            <small>Contas demo — Ploutos</small>
+          </span>
+        </a>
+        <a class="admin-link-site" href="/ploutos" target="_blank" rel="noopener">Ver página Ploutos</a>
+      </header>
+
+      <!-- LOGIN -->
+      <section id="section-login">
+        <header class="admin-head">
+          <h1>Acesso restrito</h1>
+          <p>Digite a senha de administrador para gerenciar as contas demo.</p>
+        </header>
+
+        <form id="login-form" class="admin-login">
+          <div class="admin-login-field">
+            <label for="admin-password">Senha</label>
+            <input id="admin-password" type="password" required placeholder="Senha de administrador" autocomplete="current-password">
+          </div>
+          <button class="admin-login-submit" type="submit">Entrar</button>
+          <p id="login-error" style="color:var(--danger);font-size:.9rem;display:none;margin:0;">Senha incorreta. Tente novamente.</p>
+        </form>
+      </section>
+
+      <!-- PAINEL -->
+      <section id="section-panel" style="display:none;">
+        <header class="admin-head" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h1 style="margin:0;">Gerenciar contas demo</h1>
+            <p style="margin:4px 0 0;">Influenciadores têm acesso completo ao plano Pro, sem cobrança.</p>
+          </div>
+          <button id="btn-logout" class="ghost" type="button" style="font-size:.85rem;padding:8px 14px;">Sair</button>
+        </header>
+
+        <div class="demo-form">
+          <div class="demo-field">
+            <label for="input-phone">Número do WhatsApp</label>
+            <input id="input-phone" type="tel" placeholder="Ex: 91982937521 (com DDD, sem +55)" inputmode="numeric">
+          </div>
+
+          <div class="demo-actions">
+            <button id="btn-liberar" class="btn-liberar" type="button">✅ Liberar demo</button>
+            <button id="btn-revogar" class="btn-revogar" type="button">🚫 Revogar acesso</button>
+          </div>
+
+          <div id="feedback" class="demo-feedback"></div>
+        </div>
+
+        <div class="demo-history">
+          <h2>Histórico desta sessão</h2>
+          <div id="history-list" class="history-list">
+            <p style="color:var(--ink-soft);font-size:.88rem;margin:0;">Nenhuma ação realizada ainda.</p>
+          </div>
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <script>
+    const SESSION_KEY = 'ploutos_demo_pwd';
+
+    const $loginSection = document.getElementById('section-login');
+    const $panel        = document.getElementById('section-panel');
+    const $loginForm    = document.getElementById('login-form');
+    const $loginError   = document.getElementById('login-error');
+    const $pwdInput     = document.getElementById('admin-password');
+    const $phoneInput   = document.getElementById('input-phone');
+    const $btnLiberar   = document.getElementById('btn-liberar');
+    const $btnRevogar   = document.getElementById('btn-revogar');
+    const $feedback     = document.getElementById('feedback');
+    const $historyList  = document.getElementById('history-list');
+    const $btnLogout    = document.getElementById('btn-logout');
+
+    let savedPassword = '';
+    let historyEmpty  = true;
+
+    function showPanel(password) {
+      savedPassword = password;
+      sessionStorage.setItem(SESSION_KEY, password);
+      $loginSection.style.display = 'none';
+      $panel.style.display = 'block';
+    }
+
+    function showLogin() {
+      savedPassword = '';
+      sessionStorage.removeItem(SESSION_KEY);
+      $loginSection.style.display = 'block';
+      $panel.style.display = 'none';
+      $pwdInput.value = '';
+      $loginError.style.display = 'none';
+    }
+
+    // Restaurar sessão
+    const stored = sessionStorage.getItem(SESSION_KEY);
+    if (stored) showPanel(stored);
+
+    $loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = $pwdInput.value.trim();
+      if (!password) return;
+
+      const btn = $loginForm.querySelector('button');
+      btn.disabled = true;
+      btn.textContent = 'Verificando...';
+
+      // Valida senha fazendo uma chamada com número fictício — o servidor retorna 401 se errada
+      const res = await callApi(password, '00000000000', 'add').catch(() => null);
+
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+
+      if (res && res.status !== 401) {
+        showPanel(password);
+      } else {
+        $loginError.style.display = 'block';
+      }
+    });
+
+    $btnLogout.addEventListener('click', showLogin);
+
+    async function callApi(password, phone, action) {
+      const response = await fetch('/api/demo-users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, phone, action }),
+      });
+      return { status: response.status, data: await response.json().catch(() => ({})) };
+    }
+
+    function setFeedback(msg, isSuccess) {
+      $feedback.textContent = msg;
+      $feedback.className = 'demo-feedback ' + (isSuccess ? 'is-success' : 'is-error');
+    }
+
+    function addHistory(phone, action, success) {
+      if (historyEmpty) {
+        $historyList.innerHTML = '';
+        historyEmpty = false;
+      }
+      const label  = action === 'add' ? 'Liberado' : 'Revogado';
+      const tagCls = action === 'add' ? 'tag-ok' : 'tag-rev';
+      const item   = document.createElement('div');
+      item.className = 'history-item';
+      item.innerHTML = `<span class="phone">${phone}</span><span class="tag ${tagCls}">${success ? label : 'Erro'}</span>`;
+      $historyList.prepend(item);
+    }
+
+    async function handleAction(action) {
+      const phone = $phoneInput.value.replace(/\D/g, '').trim();
+      if (phone.length < 10) {
+        setFeedback('Digite um número válido com DDD (ex: 91982937521).', false);
+        return;
+      }
+
+      $btnLiberar.disabled = true;
+      $btnRevogar.disabled = true;
+      setFeedback('Aguarde...', true);
+
+      const { status, data } = await callApi(savedPassword, phone, action).catch(() => ({
+        status: 500,
+        data: { error: 'Falha de rede.' },
+      }));
+
+      $btnLiberar.disabled = false;
+      $btnRevogar.disabled = false;
+
+      if (status === 401) {
+        showLogin();
+        return;
+      }
+
+      const ok = data?.ok === true;
+
+      if (ok && action === 'add') {
+        setFeedback(`✅ Demo liberado para ${phone}. Mensagem de boas-vindas enviada no WhatsApp.`, true);
+      } else if (ok && action === 'remove') {
+        setFeedback(`🚫 Acesso revogado para ${phone}.`, true);
+      } else {
+        setFeedback(`❌ Erro: ${data?.error ?? 'Resposta inesperada do servidor.'}`, false);
+      }
+
+      addHistory(phone, action, ok);
+      if (ok) $phoneInput.value = '';
+    }
+
+    $btnLiberar.addEventListener('click', () => handleAction('add'));
+    $btnRevogar.addEventListener('click', () => handleAction('remove'));
+  </script>
+</body>
+</html>
