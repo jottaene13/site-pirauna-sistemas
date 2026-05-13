@@ -10,7 +10,7 @@ const PLAN_MAP = {
 };
 
 const ACTIVATE_EVENTS   = ['PAYMENT_RECEIVED', 'PAYMENT_CONFIRMED'];
-const DEACTIVATE_EVENTS = ['PAYMENT_OVERDUE', 'SUBSCRIPTION_CANCELLED'];
+const DEACTIVATE_EVENTS = ['PAYMENT_OVERDUE', 'PAYMENT_DELETED'];
 
 function extractExternalRef(event) {
   return event?.payment?.externalReference
@@ -87,6 +87,7 @@ module.exports = async (req, res) => {
     }
 
     const status = eventType === 'PAYMENT_OVERDUE' ? 'PAUSED' : 'CANCELLED';
+    // PAYMENT_DELETED: disparado quando assinatura é cancelada (pagamentos pendentes são deletados)
 
     try {
       const apiRes = await fetch(`${PLOUTOS_API_URL}/users/deactivate`, {
