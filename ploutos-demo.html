@@ -148,8 +148,7 @@
       btn.disabled = true;
       btn.textContent = 'Verificando...';
 
-      // Valida senha fazendo uma chamada com número fictício — o servidor retorna 401 se errada
-      const res = await callApi(password, '00000000000', 'add').catch(() => null);
+      const res = await callApi(password, '', 'validate').catch(() => null);
 
       btn.disabled = false;
       btn.textContent = 'Entrar';

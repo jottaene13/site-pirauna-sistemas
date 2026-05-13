@@ -22,6 +22,11 @@ module.exports = async (req, res) => {
     return res.status(401).json({ ok: false, error: 'Senha incorreta.' });
   }
 
+  // Ação de validação de senha — não chama o backend Ploutos
+  if (action === 'validate') {
+    return res.status(200).json({ ok: true });
+  }
+
   if (!phone || !['add', 'remove'].includes(action)) {
     return res.status(400).json({ ok: false, error: 'Dados inválidos.' });
   }
