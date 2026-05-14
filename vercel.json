@@ -15,7 +15,8 @@
     { "source": "/portfolio", "destination": "/", "permanent": true },
     { "source": "/portfolio.html", "destination": "/", "permanent": true },
     { "source": "/checkout.html", "destination": "/checkout", "permanent": true },
-    { "source": "/ploutos-demo.html", "destination": "/ploutos-demo", "permanent": true }
+    { "source": "/ploutos-demo.html", "destination": "/ploutos-demo", "permanent": true },
+    { "source": "/privacidade.html", "destination": "/privacidade", "permanent": true }
   ],
   "functions": {
     "api/*.js": {
