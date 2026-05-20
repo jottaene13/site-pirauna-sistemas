@@ -12,6 +12,10 @@ const PLANS = {
     mensal: { value: 44.90,  cycle: 'MONTHLY', description: 'Ploutos Pro com IA - Mensal' },
     anual:  { value: 449.00, cycle: 'YEARLY',  description: 'Ploutos Pro com IA - Anual'  },
   },
+  empresarial: {
+    mensal: { value: 79.90,  cycle: 'MONTHLY', description: 'Ploutos Empresarial - Mensal' },
+    anual:  { value: 799.00, cycle: 'YEARLY',  description: 'Ploutos Empresarial - Anual'  },
+  },
 };
 
 async function asaas(method, path, body) {

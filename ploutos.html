@@ -165,7 +165,7 @@
         <div class="section-head" data-reveal style="text-align:center;max-width:100%;">
           <p class="eyebrow">Planos</p>
           <h2>Escolha o que faz mais sentido para você</h2>
-          <p style="max-width:50ch;margin:0 auto;">Ambos os planos funcionam 100% pelo WhatsApp. Sem contrato, cancele quando quiser.</p>
+          <p style="max-width:50ch;margin:0 auto;">Todos os planos funcionam 100% pelo WhatsApp. Sem contrato, cancele quando quiser.</p>
         </div>
 
         <!-- Toggle Mensal / Anual -->
@@ -220,16 +220,44 @@
             <a class="btn btn-primary" id="cta-pro" href="/checkout?plano=pro&periodo=mensal">Assinar o Pro com IA</a>
           </div>
 
+          <!-- Empresarial -->
+          <div class="pricing-card">
+            <div class="pricing-name">Empresarial</div>
+            <div class="pricing-tagline">Controle financeiro completo para o seu negócio</div>
+            <div class="pricing-price">
+              <strong id="price-empresarial">R$79,90</strong>
+              <span id="period-empresarial">/mês</span>
+            </div>
+            <p id="permonth-empresarial" hidden style="font-size:0.82rem;opacity:0.7;margin:-8px 0 12px;text-align:center;">equivale a R$66,58/mês</p>
+            <ul class="pricing-features">
+              <li>Tudo do plano Pro com IA</li>
+              <li>Contas a receber e a pagar com lembretes</li>
+              <li>Relatório de faturamento e lucro</li>
+              <li>Categorias financeiras para negócios</li>
+              <li>Onboarding para MEI, ME e autônomos</li>
+              <li>Envio de áudios e fotos de recibos com IA</li>
+            </ul>
+            <a class="btn btn-ghost" id="cta-empresarial" href="/checkout?plano=empresarial&periodo=mensal">Assinar o Empresarial</a>
+          </div>
+
         </div>
 
         <script>
           (function () {
-            var prices   = { essencial: { mensal: 'R$24,90', anual: 'R$249,00' }, pro: { mensal: 'R$44,90', anual: 'R$449,00' } };
-            var permonth = { essencial: 'equivale a R$20,75/mês', pro: 'equivale a R$37,42/mês' };
-            var period   = 'mensal';
+            var prices   = {
+              essencial:    { mensal: 'R$24,90',  anual: 'R$249,00' },
+              pro:          { mensal: 'R$44,90',  anual: 'R$449,00' },
+              empresarial:  { mensal: 'R$79,90',  anual: 'R$799,00' },
+            };
+            var permonth = {
+              essencial:   'equivale a R$20,75/mês',
+              pro:         'equivale a R$37,42/mês',
+              empresarial: 'equivale a R$66,58/mês',
+            };
+            var period = 'mensal';
 
             function update() {
-              ['essencial', 'pro'].forEach(function (p) {
+              ['essencial', 'pro', 'empresarial'].forEach(function (p) {
                 document.getElementById('price-' + p).textContent  = prices[p][period];
                 document.getElementById('period-' + p).textContent = period === 'mensal' ? '/mês' : '/ano';
                 var pm = document.getElementById('permonth-' + p);

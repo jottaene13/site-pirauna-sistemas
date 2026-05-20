@@ -73,6 +73,13 @@
                       <span class="badge badge-beta" style="font-size:0.6rem;padding:2px 8px;margin-top:2px">Popular</span>
                     </div>
                   </label>
+                  <label class="plan-option">
+                    <input type="radio" name="plano" value="empresarial">
+                    <div class="plan-option-inner">
+                      <span class="plan-name">Empresarial</span>
+                      <span class="plan-price" id="price-empresarial">R$79,90/mês</span>
+                    </div>
+                  </label>
                 </div>
               </div>
 
@@ -252,6 +259,19 @@
           'Suporte prioritário',
         ],
       },
+      empresarial: {
+        name: 'Ploutos Empresarial',
+        mensal: { price: 'R$79,90', period: '/mês', perMonth: null, savings: null },
+        anual:  { price: 'R$799,00', period: '/ano', perMonth: 'equivale a R$66,58/mês', savings: '🎉 Você economiza 2 meses!' },
+        features: [
+          'Tudo do plano Pro com IA',
+          'Contas a receber e a pagar com lembretes',
+          'Relatório de faturamento e lucro',
+          'Categorias financeiras para negócios',
+          'Onboarding para MEI, ME e autônomos',
+          'Envio de áudios e fotos de recibos com IA',
+        ],
+      },
     };
 
     const urlParams    = new URLSearchParams(window.location.search);
@@ -280,8 +300,9 @@
     }
 
     function updatePlanPrices() {
-      document.getElementById('price-essencial').textContent = selectedPeriod === 'mensal' ? 'R$24,90/mês' : 'R$249,00/ano';
-      document.getElementById('price-pro').textContent       = selectedPeriod === 'mensal' ? 'R$44,90/mês' : 'R$449,00/ano';
+      document.getElementById('price-essencial').textContent    = selectedPeriod === 'mensal' ? 'R$24,90/mês'  : 'R$249,00/ano';
+      document.getElementById('price-pro').textContent          = selectedPeriod === 'mensal' ? 'R$44,90/mês'  : 'R$449,00/ano';
+      document.getElementById('price-empresarial').textContent  = selectedPeriod === 'mensal' ? 'R$79,90/mês'  : 'R$799,00/ano';
     }
 
     function initPlanSelector() {
